@@ -1,0 +1,18 @@
+{
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "smartcow",
+    "namespace": "default",
+    "labels": {
+      "name": "smartcow"
+    }
+  },
+  "spec": {
+    "type": "ClusterIP",
+    "clusterIP": "None",
+    "selector": {
+      "group": "smartcow"
+    }
+  }
+}

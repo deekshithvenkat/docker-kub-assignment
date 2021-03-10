@@ -1,0 +1,30 @@
+version: "2"
+services:
+  app:
+    hostname: app
+    container_name: app
+    build: api/.
+    ports:
+      - 5000:5000
+    restart: always
+  sys-stats:
+    hostname: sys-stats
+    container_name: sys-stats
+    build: sys-stats/.
+    ports:
+      - 3000:3000
+    restart: always
+    depends_on: 
+      - app
+  nginx:
+    hostname: nginx
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+    restart: always
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - sys-stats
+

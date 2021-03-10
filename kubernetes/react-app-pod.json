@@ -1,0 +1,40 @@
+{
+  "kind": "ReplicationController",
+  "reactVersion": "v1",
+  "metadata": {
+    "name": "react",
+    "namespace": "default",
+    "labels": {
+      "name": "react"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "service": "react"
+    },
+    "template": {
+      "metadata": {
+        "name": "react",
+        "namespace": "default",
+        "labels": {
+          "service": "react",
+          "group": "smartcow"
+        }
+      },
+      "spec": {
+        "containers": [{
+          "name": "react-service",
+          "image": "smartcow/react:latest",
+          "ports": [{ "containerPort": 5000 }],
+          "imagePullPolicy": "IfNotPresent"
+        }],
+        "hostname": "react",
+        "hostNetwork": false,
+        "subdomain": "smartcow",
+        "dnsPolicy": "ClusterFirst",
+        "restartPolicy": "Always"
+      }
+    }
+  }
+}

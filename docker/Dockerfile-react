@@ -1,0 +1,22 @@
+FROM node:15.11.0-alpine
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package.json /usr/src/app/
+COPY package-lock.json /usr/src/app/
+
+# Install all dependency packages to install node module
+RUN apk add --update openssh &&\
+    apk --no-cache add --virtual native-deps \
+    g++ gcc libgcc libstdc++ linux-headers make python && \
+    npm install && \
+    apk del native-deps
+
+# Bundle app source
+COPY . /usr/src/app/
+
+EXPOSE 5000
+CMD [ "npm", "start" ]

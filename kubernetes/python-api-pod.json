@@ -1,0 +1,40 @@
+{
+  "kind": "ReplicationController",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "api",
+    "namespace": "default",
+    "labels": {
+      "name": "api"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "service": "api"
+    },
+    "template": {
+      "metadata": {
+        "name": "api",
+        "namespace": "default",
+        "labels": {
+          "service": "api",
+          "group": "smartcow"
+        }
+      },
+      "spec": {
+        "containers": [{
+          "name": "api-service",
+          "image": "smartcow/api:latest",
+          "ports": [{ "containerPort": 5000 }],
+          "imagePullPolicy": "IfNotPresent"
+        }],
+        "hostname": "api",
+        "hostNetwork": false,
+        "subdomain": "smartcow",
+        "dnsPolicy": "ClusterFirst",
+        "restartPolicy": "Always"
+      }
+    }
+  }
+}
